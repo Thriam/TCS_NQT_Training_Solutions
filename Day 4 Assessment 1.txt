@@ -1,0 +1,308 @@
+D2P1
+
+Problem Statement:
+
+
+
+Given a string S (input consisting) of ‘*’ and ‘#’. The length of the string is variable. The task is to find the minimum number of '*' or '#' to make it a valid string. The string is considered valid if the number of '*' and '#' are equal. The '*' and '#' can be at any position in the string.
+
+
+
+Note: The output will be a positive or negative integer based on number of '*' and '#' in the input string.
+
+
+
+(* > #): positive integer
+
+(# > *): negative integer
+
+(# = *): 0
+
+
+
+Example:
+
+Input:
+
+###*** -> Value of S
+
+
+
+Output:
+
+0   → number of * and # are equal.
+
+Input format :
+The input consists of the string S. The input string should be # and *.
+
+Output format :
+The output displays the difference between the count of '*' and '#' characters in the input string S with following conditions:
+
+If the number of '*' is greater than the number of '#', the output should be a positive integer.
+If the number of '#' is greater than '*', the output should be a negative integer.
+If both the counts are equal, the output should be 0.
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 ≤ S ≤ 100.
+
+The string S consists of only '*' and '#' characters.
+
+Sample test cases :
+Input 1 :
+###***
+Output 1 :
+0
+Input 2 :
+#####***
+Output 2 :
+-2
+Input 3 :
+*****#*#
+Output 3 :
+4
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case.
+
+Solution
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String S = scanner.nextLine();
+
+        int starCount = 0;
+        int hashCount = 0;
+
+        for (char ch : S.toCharArray()) {
+            if (ch == '*') {
+                starCount++;
+            } else if (ch == '#') {
+                hashCount++;
+            }
+        }
+
+        int result = starCount - hashCount;
+        System.out.println(result);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+D2P2
+
+Problem Statement
+
+
+
+Alice wants to write a program with a string containing uppercase alphabets and integer digits (0 to 9). The task is to print the sorted alphabet in the order followed by the sum of digits.
+
+
+
+Example
+
+
+
+Input: 
+
+AC2BEW3
+
+
+
+Output: 
+
+ABCEW5
+
+
+
+Explanation:
+
+The output prints the alphabet in lexicographic order, followed by the sum of integers (2 and 3).
+
+Input format :
+The input consists of a string value containing characters and integer values.
+
+Output format :
+The output displays a string value representing the alphabet in the given order, followed by the sum of digits.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+1 <= length of string <= 100
+
+Maximum character is 26
+
+The duplicate characters do not contain.
+
+Sample test cases :
+Input 1 :
+AC2BEW3
+Output 1 :
+ABCEW5
+Input 2 :
+Z2X5C1V4BN123
+Output 2 :
+BCNVXZ18
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case.
+
+Solution
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        StringBuilder letters = new StringBuilder();
+        int sum = 0;
+
+        for (char ch : input.toCharArray()) {
+            if (Character.isUpperCase(ch)) {
+                letters.append(ch);
+            } else if (Character.isDigit(ch)) {
+                sum += Character.getNumericValue(ch);
+            }
+        }
+
+        char[] sortedLetters = letters.toString().toCharArray();
+        Arrays.sort(sortedLetters);
+
+        String result = new String(sortedLetters) + sum;
+        System.out.println(result);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+D2P3
+
+Problem Statement
+
+
+
+Given two strings, determine if the first string can be transformed into the second string. The only operation allowed is moving a character from the first string to the front. If the string can be transformed, find the minimum number of operations required for the transformation.
+
+
+
+Example
+
+
+
+Input:
+
+ADCB
+
+ABCD
+
+
+
+Output:
+
+3
+
+
+
+Explanation:
+
+The minimum number of operations required to convert the string ADCB to string ABCD is 3.
+
+ADCB —> CADB (Move ‘C’ to the front)
+
+CADB —> BCAD (Move ‘B’ to the front)
+
+BCAD —> ABCD (Move ‘A’ to the front)
+
+Input format :
+The first line of input consists of the string value 's' representing the first string
+
+The second line of input consists of the string value 's1' representing the second string.
+
+Output format :
+The output displays either the minimum number of operations required to transform the first string into the second string or a message indicating that the string cannot be transformed.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+The string s and s1 contain uppercase, lowercase, and spaces.
+
+Sample test cases :
+Input 1 :
+FTCD
+DTFC
+Output 1 :
+2
+Input 2 :
+CODE
+VITA
+Output 2 :
+The string cannot be transformed
+Input 3 :
+ADCB
+ABCD
+Output 3 :
+3
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case.
+
+Solution
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        String s1 = scanner.nextLine();
+
+        int result = minOperations(s, s1);
+        if (result == -1) {
+            System.out.println("The string cannot be transformed");
+        } else {
+            System.out.println(result);
+        }
+    }
+
+    private static int minOperations(String s, String s1) {
+        if (s.length() != s1.length()) {
+            return -1; // Lengths must match
+        }
+
+        // Check if transformation is possible by comparing character counts
+        int[] charCount = new int[256];
+        for (char c : s.toCharArray()) charCount[c]++;
+        for (char c : s1.toCharArray()) {
+            if (--charCount[c] < 0) {
+                return -1; // Character mismatch
+            }
+        }
+
+        // Count moves needed
+        int moves = 0;
+        int indexS1 = s1.length() - 1;
+
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == s1.charAt(indexS1)) {
+                indexS1--; // Match found, move to the previous character in s1
+            } else {
+                moves++; // Need to move this character
+            }
+        }
+
+        return moves;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------

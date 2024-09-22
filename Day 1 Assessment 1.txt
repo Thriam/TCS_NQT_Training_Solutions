@@ -1,0 +1,348 @@
+D1P1
+
+Problem Statement
+
+
+You will be given an array of integers and a target value. Determine the number of pairs of array elements that have a difference equal to a target value.
+
+
+For example, given an array of [1, 2, 3, 4] and a target value of 1, we have three values meeting the condition: 2-1 = 1, 3-2 = 1, and 4-3 = 1.
+
+
+Function Description
+
+
+Write a function pair. It must return an integer representing the number of element pairs having the required difference.
+
+
+Pairs has the following parameter(s):
+
+k: an integer, the target difference
+
+arr: an array of integers
+Input format :
+
+The first line contains two space-separated integers n and k, the size of arr, and the target value.
+
+The second line contains n space-separated integers of the array arr[I].
+Output format :
+
+The output displays an integer representing the number of element pairs from the array arr that have a difference of k.
+
+
+Refer to the sample output for formatting specifications.
+Code constraints :
+
+1 ≤ n, k ≤ 10.
+
+1 ≤ Arr[i] ≤ 100.
+Sample test cases :
+Input 1 :
+
+4 1
+1 2 3 4
+
+Output 1 :
+
+3
+
+Input 2 :
+
+5 2
+1 5 3 4 2 
+
+Output 2 :
+
+3
+
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case. 
+
+Solution
+
+def pair(k, arr):
+    count = 0
+    seen = set(arr)  # Use a set for O(1) average time complexity for lookups
+
+    for number in arr:
+        if (number + k) in seen:
+            count += 1
+
+    return count
+
+# Read input
+if __name__ == "__main__":
+    n, k = map(int, input().split())
+    arr = list(map(int, input().split()))
+    
+    result = pair(k, arr)
+    print(result)
+
+------------------------------------------------------------------------------------------------------------------------------------
+D1P2
+
+Problem Statement
+
+
+Particulate matters are the biggest contributors to Delhi's pollution. The main reason behind the increase in the concentration of PMs includes vehicle emission by applying the Odd-Even concept for all types of vehicles. The vehicles with the odd last digit in the registration number will be allowed on roads on odd dates and those with an even last digit will be on even dates.
+
+
+Given an integer array a[], contains the last digit of the registration number of N vehicles traveling on date D(a positive integer). The task is to calculate the total fine collected by the traffic police department from the vehicles violating the rules.
+
+
+Note: For violating the rule, vehicles would be fined as X Rs.
+
+
+Example 1:
+
+Input:
+
+4 -> Value of N
+
+{5,2,3,7} -> a[], Elements a[0] to a[N-1], during input each element is separated by a new line
+
+12 -> Value of D, i.e. date 
+
+200 -> Value of x i.e. fine
+
+Output:
+
+600  -> total fine collected 
+
+Explanation:
+
+Date D=12 means, only an even number of vehicles are allowed. 
+
+Find will be collected from 5,3 and 7 with an amount of 200 each.
+
+Hence, the output = 600.
+
+
+Example 2
+
+Input:
+
+5   -> Value of N 
+
+{2,5,1,6,8}  -> a[], elements a[0] to a[N-1], during input each element is separated by new line
+
+3 -> Value of D i.e. date 
+
+300 -> Value of X i.e. fine 
+
+Output:
+
+900  -> total fine collected.
+
+Explanation:
+
+Date D=3 means only odd number vehicles are allowed.
+
+Find will be collected from 2,6 and 8 with an amount of 300 each.
+
+Hence, the output = 900 
+Input format :
+
+The first line contains an integer N, indicating the number of vehicles.
+
+The second line contains N space-separated integers representing the last digit of the registration numbers of the vehicles (a[0] to a[N-1]).
+
+The third line contains an integer D, representing the date.
+
+The fourth line contains an integer X, which is the fine amount for violating the rule.
+Output format :
+
+The output displays a single integer representing the total fine collected from vehicles violating the rule.
+
+
+Refer to the sample output for formatting specifications.
+Code constraints :
+
+1 <= N <= 10
+
+1 <= a[i] <= 9 for 0 <= i < N
+
+1 <= D <= 31
+
+100 <= X <= 1000
+Sample test cases :
+Input 1 :
+
+4
+5 2 3 7
+12
+200
+
+Output 1 :
+
+600
+
+Input 2 :
+
+5
+2 5 1 6 8
+3
+300
+
+Output 2 :
+
+900
+
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case. 
+
+Solution
+
+def calculate_fine(N, a, D, X):
+    total_fine = 0
+
+    # Determine if the date is odd or even
+    is_even_date = (D % 2 == 0)
+
+    for last_digit in a:
+        if (is_even_date and last_digit % 2 != 0) or (not is_even_date and last_digit % 2 == 0):
+            total_fine += X
+
+    return total_fine
+
+# Read input
+if __name__ == "__main__":
+    N = int(input().strip())  # Number of vehicles
+    a = list(map(int, input().strip().split()))  # Last digits of the registration numbers
+    D = int(input().strip())  # Date
+    X = int(input().strip())  # Fine amount
+
+    result = calculate_fine(N, a, D, X)
+    print(result)
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Problem Statement
+
+
+Given an integer array Arr of size N the task is to find the count of elements whose value is greater than all of its prior elements.
+
+
+Note: 1st element of the array should be considered in the count of the result.
+
+
+Example 1:
+
+Input:
+
+4
+
+2 4 5 6
+
+Output: 4
+
+Explanation:
+
+Since the array is in increasing order, all the array elements satisfy the condition.
+
+Hence, the count of such elements is equal to the size of the array, i.e. equal to 4.
+
+
+Example 2:
+
+Input 
+
+5
+
+3 4 5 8 9
+
+Output 
+
+5
+
+Explanation:
+
+For the provided input array [3, 4, 5, 8, 9], the output will be 5 because:
+
+3 is greater than all elements before it.
+
+4 is greater than 3.
+
+5 is greater than 4.
+
+8 is greater than 5.
+
+9 is greater than 8.
+
+So, there are 5 elements in the array which are strictly greater than all elements before them. Hence, the output is 5.
+Input format :
+
+The first line of input consists of an integer N, which represents the size of the array Arr.
+
+The second line of input consists of N space-separated integers representing the elements of the array Arr.
+Output format :
+
+The output represents a single integer which indicates the count of elements meeting the condition of being greater than all of their prior elements.
+
+
+Refer to the sample output for formatting specifications.
+Code constraints :
+
+3 ≤ N ≤ 20
+
+1 ≤ Arr[i] ≤ 1000
+Sample test cases :
+Input 1 :
+
+4
+2 4 5 6
+
+Output 1 :
+
+4
+
+Input 2 :
+
+5
+3 4 5 8 9
+
+Output 2 :
+
+5
+
+Input 3 :
+
+4
+5 6 1 8
+
+Output 3 :
+
+3
+
+Note :
+The program will be evaluated only after the “Submit Code” is clicked.
+Extra spaces and new line characters in the program output will result in the failure of the test case. 
+
+
+Solution
+
+def count_greater_than_prior(N, Arr):
+    count = 1
+    max_so_far = Arr[0]
+
+    for i in range(1, N):
+        if Arr[i] > max_so_far:
+            count += 1
+            max_so_far = Arr[i]
+
+    return count
+
+if __name__ == "__main__":
+    N = int(input().strip())
+    Arr = list(map(int, input().strip().split()))
+
+    result = count_greater_than_prior(N, Arr)
+    print(result)
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
